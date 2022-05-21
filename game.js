@@ -4,7 +4,7 @@ window.onload = function event(){
 }
 
 var game = false;
-
+var points = 0;
 
 function load(){
     const startBtn = document.getElementById('start');
@@ -41,14 +41,16 @@ function youLost(){
             item.classList.add('youlose');
         });
 
-        document.getElementById('status').innerText = 'You Lose!';
+        points -=10;
+        document.getElementById('status').innerText = `You Lost! -10pts Total: ${points}pts`;
         game = false;
     }
 }
 
 function youWin(){
     if (game){
-        document.getElementById('status').innerText = 'You Win!';
+        points += 5;
+        document.getElementById('status').innerText = `You Win! +5pts Total: ${points}pts`;
         game = false;
     }
 }
