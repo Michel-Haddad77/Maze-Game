@@ -11,13 +11,14 @@ function load(){
     const wall = document.querySelectorAll('.boundary:not(.example)');
     const endBtn =  document.getElementById('end');
 
-    startBtn.addEventListener('click',start);
+    startBtn.addEventListener('mouseover',start);
+    startBtn.addEventListener('click',resetPoints);
 
     document.getElementById('status').addEventListener('mouseover',cheating);
     document.getElementsByTagName('p')[0].addEventListener('mouseover',cheating);
     
     wall.forEach(item => {
-        item.addEventListener('mouseover',youLost)
+        item.addEventListener('mouseover',youLost);
     })
 
     endBtn.addEventListener('mouseover',youWin)
@@ -28,12 +29,12 @@ function load(){
 function start(){
     if (!game){
         game = true;
-        console.log(game);
+        //console.log(game);
         document.querySelectorAll('.boundary:not(.example)').forEach(item => {
             item.classList.remove('youlose');
         });
         
-        document.getElementById("status").innerHTML = 'Begin by moving your mouse over the "S".';
+        document.getElementById("status").innerHTML = 'GO!!';
     }
 
 
@@ -64,9 +65,17 @@ function youWin(){
 //function used in case of cheating
 function cheating(){
     if (game){
-        alert("Come on, man! Don't cheat. Your points have been reset");
+        alert("Come on, man! Don't cheat. The game has been reset");
+        document.getElementById("status").innerHTML = 'Begin by moving your mouse over the "S".';
         points = 0;
-        game = false;
+        game = false;      
     }
 
+}
+
+function resetPoints(){
+    if (points){
+        alert("Your points have been reset!");
+        points = 0;
+    }
 }
