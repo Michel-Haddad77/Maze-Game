@@ -6,6 +6,9 @@ window.onload = function event(){
 
 var game = false;
 var points = 0;
+var milliseconds = 0;
+var seconds = 0;
+var minutes = 0;
 
 function load(){
     //declaring element objects
@@ -46,9 +49,20 @@ function start(){
         });
         
         document.getElementById("status").innerHTML = 'GO!!';
+
+        interval = setInterval(function displayTimer(){
+            milliseconds++;
+            if(milliseconds == 10){
+                milliseconds = 0;
+                seconds++;
+                if(seconds == 60){
+                    seconds = 0;
+                    minutes++
+                }
+            }
+            document.getElementById("live").innerHTML = `${minutes}:${seconds},${milliseconds}`}, 100);
     }
 }
-
 //function when the user loses the game
 function youLost(){
     //if the game has started
@@ -62,6 +76,9 @@ function youLost(){
         //update the status header element
         document.getElementById('status').innerText = `You Lost! -10pts Total: ${points}pts`;
         game = false;
+
+        clearInterval(interval);
+        document.getElementById("last").innerHTML = document.getElementById("live").innerHTML;
     }
 }
 
@@ -71,6 +88,10 @@ function youWin(){
         points += 5;
         document.getElementById('status').innerText = `You Win! +5pts Total: ${points}pts`;
         game = false;
+
+        clearInterval(interval);
+        document.getElementById("last").innerHTML = document.getElementById("live").innerHTML;
+        bestTime();
     }
 }
 
