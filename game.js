@@ -9,6 +9,7 @@ var points = 0;
 var milliseconds = 0;
 var seconds = 0;
 var minutes = 0;
+var best_time = Infinity;
 
 function load(){
     //declaring element objects
@@ -74,11 +75,15 @@ function youLost(){
 
         points -=10;
         //update the status header element
-        document.getElementById('status').innerText = `You Lost! -10pts Total: ${points}pts`;
+        document.getElementById('status').innerText = 'You Lost! -10pts';
+        document.getElementById('score').innerText = `Your Score: ${points}`;
         game = false;
 
         clearInterval(interval);
         document.getElementById("last").innerHTML = document.getElementById("live").innerHTML;
+        milliseconds = 0;
+        seconds = 0;
+        minutes = 0;
     }
 }
 
@@ -86,12 +91,16 @@ function youLost(){
 function youWin(){
     if (game){
         points += 5;
-        document.getElementById('status').innerText = `You Win! +5pts Total: ${points}pts`;
+        document.getElementById('status').innerText = 'You Win! +5pts';
+        document.getElementById('score').innerText = `Your Score: ${points}`;
         game = false;
 
         clearInterval(interval);
         document.getElementById("last").innerHTML = document.getElementById("live").innerHTML;
-        bestTime();
+        bestTime(milliseconds,seconds,minutes);
+        milliseconds = 0;
+        seconds = 0;
+        minutes = 0;
     }
 }
 
@@ -112,5 +121,13 @@ function resetPoints(){
         document.getElementById("status").innerHTML = 'Begin by moving your mouse over the "S".';
         points = 0;
         game = false;
+    }
+}
+
+function bestTime(ms,s,m){
+    total = (ms*0.1) + s + (m * 60);
+    if (total < best_time) {
+        document.getElementById("best").innerHTML = document.getElementById("live").innerHTML;
+        best_time = total
     }
 }
